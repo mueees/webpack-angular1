@@ -12,8 +12,6 @@ module.exports = {
 
         // Set up an ES6-ish environment
         polyfill: 'babel-polyfill'
-
-        /*common: ['./welcome', './common']*/ // get common part from this entry poins
     },
 
     output: {
@@ -25,46 +23,23 @@ module.exports = {
     watch: true,
 
     watchOptions: {
-        aggregateTimeout: 500
+        aggregateTimeout: 100
     },
 
     devtool: 'source-map',
 
     plugins: [
-        new webpack.NoErrorsPlugin(),
-        /*new webpack.DefinePlugin({
-         NODE_ENV: JSON.stringify(NODE_ENV)
-         }),
-         new webpack.optimize.CommonsChunkPlugin({
-         name: 'common',
-         minChunks: 3,
-         chunks: ['home', 'about']
-         })*/
+        new webpack.NoErrorsPlugin()
     ],
 
     module: {
         loaders: [
             {
-                loader: "babel-loader",
-
-                // Skip any files outside of your project's `src` directory
-                include: [
-                    path.resolve(__dirname, "src")
-                ],
-
-                // Only run `.js` and `.jsx` files through Babel
-                test: /\.js$/,
-
-                // Options to configure babel with
-                query: {
-                    presets: ['es2015']/*,
-                    plugins: ['transform-runtime'],*/
-                }
+                loader: "babel",
+                exclude: __dirname + 'node_modules',
+                test: /\.js$/
             },
             {
-                // HTML LOADER
-                // Reference: https://github.com/webpack/raw-loader
-                // Allow loading html through js
                 test: /\.html$/,
                 loader: 'raw'
             }
@@ -82,16 +57,3 @@ module.exports = {
         extensions: ['', '.js']
     }
 };
-
-
-// For Uglify
-/*
- module.exports.plugins.push(
- new webpack.optimize.UglifyJsPlugin({
- compress: {
- warnings: false,
- drop_console: true,
- unsafe: true
- }
- })
- );*/
